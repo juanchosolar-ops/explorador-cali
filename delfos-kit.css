@@ -1,0 +1,66 @@
+/* ============================================================
+   Delfos · kit de diseño compartido · v1 (2026-10-20)
+   Fuente única: el archivo delfos-kit.css publicado en Delfos.
+   Cada artefacto lo copia al publicarse y fija SU paleta con variables --pz-*.
+   Componentes: .pz-volver · .pz-greca · .pz-marco/.pz-paspartu · .pz-ibtn · .ent (entrada)
+   ============================================================ */
+:root{
+  --pz-oro:#d4ae5a;
+  /* Botón «Volver a Delfos» */
+  --pz-volver-bg:#1f3a2e; --pz-volver-fg:#d4ae5a; --pz-volver-borde:#d4ae5a; --pz-volver-bw:2px;
+  --pz-volver-anillo:#0f1813; --pz-volver-sombra:#2f5d4b; --pz-volver-foco:#d4ae5a; --pz-volver-bottom-movil:16px;
+  /* Franja de greca */
+  --pz-banda:#1f3a2e; --pz-greca:#d4ae5a; --pz-linea:var(--pz-greca); --pz-linea-w:2px; --pz-greca-h:22px;
+  /* Botón de solo ícono que se expande */
+  --pz-ibtn-bg:transparent; --pz-ibtn-fg:currentColor; --pz-ibtn-borde:currentColor; --pz-ibtn-hover-bg:var(--pz-oro); --pz-ibtn-hover-fg:#1f2a24;
+}
+
+/* --- Volver a Delfos: solo ícono; se expande con el texto al pasar el mouse --- */
+.pz-volver{position:fixed;z-index:35;left:max(16px,calc(env(safe-area-inset-left,0px) + 12px));bottom:calc(16px + env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;gap:0;height:44px;min-width:44px;padding:0 11px;border-radius:999px;background:var(--pz-volver-bg);color:var(--pz-volver-fg);text-decoration:none;border:var(--pz-volver-bw) solid var(--pz-volver-borde);box-shadow:0 0 0 2px var(--pz-volver-anillo),3px 3px 0 2px var(--pz-volver-sombra);font:700 11px/1 "Unbounded","Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;max-width:44px;transition:max-width .25s ease,gap .25s ease,box-shadow .12s ease}
+.pz-volver svg{flex:none;width:18px;height:18px}
+.pz-volver span{opacity:0;transition:opacity .2s ease}
+.pz-volver:hover,.pz-volver:focus-visible{max-width:260px;gap:9px;box-shadow:0 0 0 2px var(--pz-volver-anillo),5px 5px 0 2px var(--pz-volver-sombra)}
+.pz-volver:hover span,.pz-volver:focus-visible span{opacity:1}
+.pz-volver:focus-visible{outline:3px solid var(--pz-volver-foco);outline-offset:3px}
+.pz-volver:active{transform:translate(2px,2px);box-shadow:0 0 0 2px var(--pz-volver-anillo),1px 1px 0 2px var(--pz-volver-sombra)}
+@media (max-width:640px){.pz-volver{bottom:calc(var(--pz-volver-bottom-movil) + env(safe-area-inset-bottom,0px))}}
+@media (prefers-reduced-motion:reduce){.pz-volver,.pz-volver span{transition:none}}
+@media print{.pz-volver{display:none!important}}
+
+/* --- Franja de greca bajo el encabezado (color por variables) --- */
+.pz-greca{display:block;position:relative;height:var(--pz-greca-h);background:var(--pz-banda);border-bottom:var(--pz-linea-w) solid var(--pz-linea)}
+.pz-greca::before{content:"";position:absolute;inset:0;background:var(--pz-greca);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='22'%3E%3Cpath d='M0 19H20M4 19V5H16V15H8V9H12' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E") repeat-x left center/20px var(--pz-greca-h);mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='22'%3E%3Cpath d='M0 19H20M4 19V5H16V15H8V9H12' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E") repeat-x left center/20px var(--pz-greca-h);pointer-events:none}
+@media print{.pz-greca{display:none!important}}
+
+/* --- Marco dorado y paspartú --- */
+.pz-marco{display:block;padding:10px;background:linear-gradient(135deg,#e9cf8a 0%,#a77f2e 22%,#f3dc9c 45%,#8a6420 70%,#d8b766 100%);box-shadow:0 0 0 2px #2a1d08}
+.pz-paspartu{display:block;padding:12px;background:#efe6d2;box-shadow:inset 0 0 0 1px #c9b98f}
+.pz-paspartu img{display:block;box-shadow:0 0 0 1px #3a2a10}
+
+/* --- Botón de acción de solo ícono que se expande al pasar el mouse --- */
+.pz-ibtn{appearance:none;display:inline-flex;align-items:center;gap:0;height:38px;max-width:38px;overflow:hidden;white-space:nowrap;padding:0 10px;border:1.5px solid var(--pz-ibtn-borde);border-radius:999px;background:var(--pz-ibtn-bg);color:var(--pz-ibtn-fg);font:700 11px/1 "Unbounded","Archivo",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:max-width .25s ease,gap .25s ease,background .15s ease}
+.pz-ibtn svg{flex:none;width:16px;height:16px}
+.pz-ibtn span{opacity:0;transition:opacity .2s ease}
+.pz-ibtn:hover,.pz-ibtn:focus-visible{max-width:240px;gap:8px;background:var(--pz-ibtn-hover-bg);border-color:var(--pz-ibtn-hover-bg);color:var(--pz-ibtn-hover-fg)}
+.pz-ibtn:hover span,.pz-ibtn:focus-visible span{opacity:1}
+.pz-ibtn:focus-visible{outline:3px solid var(--pz-ibtn-hover-bg);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.pz-ibtn,.pz-ibtn span{transition:none}}
+
+/* --- Entrada: la pintura enmarcada flota; al tocarla se entra al artefacto.
+       Cada artefacto fija --ent-bg, --ent-fg y --ent-acc y su tipografía. --- */
+.ent{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:max(24px,env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px));background:var(--ent-bg);color:var(--ent-fg);overflow:auto;transition:opacity .35s ease,visibility .35s}
+.ent.ent-out{opacity:0;visibility:hidden}
+.ent[hidden]{display:none!important}
+.ent-in{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;max-width:100%}
+.ent-k{margin:0 0 26px}
+.ent-cuadro{appearance:none;border:0;background:none;padding:0;margin:0;cursor:pointer;max-width:100%;animation:ent-flotar 6s ease-in-out infinite;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+.ent-cuadro:focus-visible{outline:3px solid var(--ent-acc);outline-offset:10px}
+.ent-frame{display:block;padding:14px;background:linear-gradient(135deg,#e9cf8a 0%,#a77f2e 22%,#f3dc9c 45%,#8a6420 70%,#d8b766 100%);box-shadow:0 0 0 3px #2a1d08,12px 12px 0 3px var(--ent-acc);transition:box-shadow .15s ease}
+.ent-cuadro:hover .ent-frame{box-shadow:0 0 0 3px #2a1d08,16px 16px 0 3px var(--ent-acc)}
+.ent-mat{display:block;padding:18px;background:#efe6d2;box-shadow:inset 0 0 0 1px #c9b98f}
+.ent-mat img{display:block;height:min(58vh,540px);width:auto;max-width:min(78vw,900px);object-fit:contain;box-shadow:0 0 0 1px #3a2a10}
+.ent-h{margin:8px 0 0;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ent-fg)}
+.ent-cap{margin:0;font-family:"EB Garamond","Iowan Old Style",Georgia,"Times New Roman",serif;font-style:italic;font-size:15px;color:#d8b766}
+@keyframes ent-flotar{0%,100%{transform:translateY(0) rotate(-.6deg)}50%{transform:translateY(-16px) rotate(.6deg)}}
+@media (prefers-reduced-motion:reduce){.ent-cuadro{animation:none}.ent{transition:none}}
+@media (max-width:640px){.ent-mat img{height:auto;max-height:50vh;max-width:calc(100vw - 96px)}.ent-frame{padding:8px}.ent-mat{padding:10px}.ent-k{margin-bottom:16px}}
