@@ -405,6 +405,16 @@ dialog.visor::backdrop{background:rgba(0,0,0,.75)}
   .print-fuentes{margin-top:18px;font-size:11px;border-top:2px solid #000;padding-top:8px}
   .print-fuentes li{margin-bottom:3px}
 }
+.ay ul,.ay ol{margin:0 0 10px;padding-left:22px;display:grid;gap:8px}
+.ay ul ul{margin-top:8px}
+.ay p{margin:0 0 10px;max-width:80ch}
+.ay li{max-width:80ch;line-height:1.5}
+.ay code{font-size:.92em;padding:0 4px;border:1px solid currentColor}
+.ay-ir{font-weight:700;color:inherit;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.ay-faq{margin:0;display:grid;gap:4px}
+.ay-faq dt{font-weight:800;margin-top:10px}
+.ay-faq dt:first-child{margin-top:0}
+.ay-faq dd{margin:0;max-width:80ch;line-height:1.5}
 </style>
 <script>document.documentElement.dataset.modo = "publicado"; document.body && document.body.classList.add("hl");</script>
 <a class="sr" href="#main">Saltar al contenido</a>
@@ -416,6 +426,7 @@ dialog.visor::backdrop{background:rgba(0,0,0,.75)}
         <div class="g-menu" id="g-bench" hidden><a href="#comparacion" data-v="comparacion">Comparación</a><a href="#indicadores" data-v="indicadores">Indicadores</a><a href="#fuentes" data-v="fuentes">Fuentes y método</a></div></div>
       <div class="grupo"><button type="button" class="g-btn" aria-expanded="false" aria-controls="g-valor">Valor público<span class="g-fl" aria-hidden="true">▾</span></button>
         <div class="g-menu" id="g-valor" hidden><a href="#valor" data-v="valor">Evidencia por sector</a><a href="#priorizar" data-v="priorizar">Priorizar</a></div></div>
+      <a href="#ayuda" data-v="ayuda">Cómo usar</a>
       </nav>
     <div class="ctrl">
       <button class="pz-ibtn" id="b-print" type="button" aria-label="Imprimir"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V4h10v5M7 17H5v-6h14v6h-2M7 14h10v6H7z"/></svg><span>Imprimir</span></button>
@@ -1148,8 +1159,87 @@ function hacerPlegables(vista, contraidasPorDefecto) {
   actualizarTodo();
 }
 
+/* ── Cómo usar: instructivo del explorador ── */
+function vAyuda() {
+  const ir = (h, t) => `<a class="ay-ir" href="#${h}">${t}</a>`;
+  const card = (titulo, cuerpo, plegada) => `<section class="card"${plegada ? ' data-plegada="si"' : ""}><div class="card-h"><h2>${titulo}</h2></div><div class="card-b ay">${cuerpo}</div></section>`;
+  return cabecera("Cómo usar", "Instructivo del explorador", "Qué contiene cada vista, cómo se lee y qué se puede hacer en ella. Cada título se pliega y se despliega con un clic.") +
+  `<div class="stack">
+  ${card("Para qué sirve", `<p>El explorador reúne en un solo lugar dos trabajos sobre los datos abiertos de Santiago de Cali:</p>
+    <ul><li><b>Benchmarking.</b> Compara el portal de Cali (datos.cali.gov.co) con el de otras cinco ciudades según los seis principios de la Carta Internacional de Datos Abiertos, y muestra las cifras medidas en cada catálogo.</li>
+    <li><b>Valor público.</b> Resume la evidencia sobre qué datos abiertos generan valor y ofrece un modelo para decidir qué conjuntos de datos abrir primero.</li></ul>
+    <p>Toda cifra tiene una fuente verificable en ${ir("fuentes", "Fuentes y método")}.</p>`)}
+  ${card("Recorrido sugerido", `<ol>
+    <li>Empiece en ${ir("inicio", "Inicio")}: los tres indicadores de la parte superior, la tabla «Dónde está Cali» y los hallazgos dan el panorama en dos minutos.</li>
+    <li>Pase a ${ir("comparacion", "Comparación")} y elija una ciudad en las pestañas para ver, principio por principio, en qué se diferencia de Cali.</li>
+    <li>Revise ${ir("indicadores", "Indicadores")} para ver las cifras que sí se pueden comparar porque se midieron igual y el mismo día.</li>
+    <li>Lea ${ir("valor", "Evidencia por sector")} para entender qué tipo de evidencia existe sobre el valor de los datos abiertos.</li>
+    <li>Termine en ${ir("priorizar", "Priorizar")}: califique los conjuntos candidatos y vea cuáles quedan como victoria temprana.</li>
+    <li>Si duda de una cifra, búsquela en ${ir("fuentes", "Fuentes y método")}.</li></ol>`)}
+  ${card("Moverse por el explorador", `<ul>
+    <li><b>Menú superior.</b> «Benchmarking» agrupa Comparación, Indicadores y Fuentes y método; «Valor público» agrupa Evidencia por sector y Priorizar. Haga clic en el grupo para abrir su lista; la vista en la que está queda resaltada.</li>
+    <li><b>Volver al inicio.</b> Haga clic en «Datos abiertos · Cali», arriba a la izquierda.</li>
+    <li><b>Enlaces para compartir.</b> Cada vista tiene su propia dirección (por ejemplo, <code>#priorizar</code> o <code>#comparacion-cali-bogota</code>). Copie la dirección del navegador y quien la abra llegará a la misma vista. Los botones Atrás y Adelante del navegador funcionan entre vistas.</li>
+    <li><b>Tema claro u oscuro.</b> El engranaje de la esquina superior derecha abre las opciones de vista: «Sistema» sigue la configuración del equipo; «Claro» y «Oscuro» la fijan. La elección se recuerda.</li>
+    <li><b>Teclado.</b> Con Tab se recorren todos los controles; la primera pulsación muestra «Saltar al contenido». Esc cierra menús y paneles.</li></ul>`)}
+  ${card("Controles que se repiten en todas las vistas", `<ul>
+    <li><b>Botón (i) «Qué significa».</b> Junto a varios títulos. Abre un panel lateral que explica qué muestra el bloque y cómo leerlo. Se cierra con la X o con Esc.</li>
+    <li><b>Cifras y celdas que se pueden abrir.</b> Los indicadores de Inicio y las celdas de la matriz de Comparación abren en el panel lateral el detalle: qué mide la cifra, de dónde sale, la fecha de corte y el enlace «Ver en Fuentes y método».</li>
+    <li><b>Tarjetas plegables.</b> El triángulo ▼ junto a cada título pliega o despliega esa tarjeta. El botón «Expandir todo / Contraer todo» actúa sobre toda la vista. El navegador recuerda lo que usted plegó.</li>
+    <li><b>Etiquetas al pasar el mouse.</b> En las barras de Indicadores y en la gráfica de tipos de datos, al pasar el mouse (o llegar con Tab) aparece el valor exacto, el dato y la fecha de corte.</li>
+    <li><b>Tablas anchas.</b> En pantallas pequeñas, las tablas se desplazan de lado dentro de su tarjeta.</li></ul>`)}
+  ${card("Inicio", `<ul>
+    <li><b>Tres indicadores clave</b> de Cali: conjuntos publicados, porcentaje que cumple la periodicidad que declara y porcentaje de recursos consultables por API. Haga clic en cada uno para ver qué significa.</li>
+    <li><b>Dónde está Cali.</b> Matriz de los seis principios de la Carta (filas) por ciudad (columnas). El color indica el estado: Fortaleza, Oportunidad de mejora, Brecha crítica o Sin evidencia.</li>
+    <li><b>Espectro de desarrollo.</b> Ubica a cada ciudad en una sola escala: el promedio, con pesos iguales, de su estado en los seis principios.</li>
+    <li><b>Hallazgos de la serie</b> y <b>Recomendaciones para Cali</b>: las conclusiones de todo el benchmarking.</li></ul>`)}
+  ${card("Comparación", `<ul>
+    <li>Las <b>pestañas</b> (Buenos Aires, Montevideo, Singapur, Medellín, Bogotá) cambian la ciudad que se compara con Cali. Con el teclado: flechas izquierda y derecha, Inicio y Fin.</li>
+    <li><b>Matriz de comparación.</b> Una fila por principio; columnas para Cali, la otra ciudad y el hallazgo clave. Cada celda se abre para ver la evidencia y la fuente.</li>
+    <li><b>Insights clave</b> y <b>Principales ventajas y desventajas</b> resumen la comparación con esa ciudad.</li></ul>`)}
+  ${card("Indicadores", `<ul>
+    <li>Solo muestra comparaciones <b>medidas con el mismo método y el mismo día</b>. Cuando dos mediciones tienen fechas o métodos distintos, se presentan por separado y se advierte.</li>
+    <li>Cada barra indica la ciudad y el valor. Pase el mouse para ver el dato exacto y la fecha de corte.</li>
+    <li>Las notas bajo cada tarjeta explican qué no se pudo medir y por qué.</li></ul>`)}
+  ${card("Fuentes y método", `<ul>
+    <li><b>Registro de cifras.</b> Todas las cifras del explorador con su valor, nivel de acceso, fecha y la consulta o fuente exacta. Use el <b>buscador</b> (por dato, valor o consulta) y los <b>filtros</b> por ciudad y por nivel de acceso; el contador indica cuántas cifras cumplen el filtro.</li>
+    <li>El <b>nivel de acceso</b> dice cómo se obtuvo la cifra: API, Cálculo, Comparativo, Texto completo o Bloqueado.</li>
+    <li><b>Portales bloqueados</b> documenta los portales que no se pudieron consultar y la razón.</li>
+    <li>Las demás tarjetas explican el método de medición y las fuentes de cada sección, del modelo de priorización y de la gráfica de tipos de datos.</li></ul>`)}
+  ${card("Evidencia por sector", `<ul>
+    <li><b>Tres ideas centrales</b> sobre cómo surge el valor público de los datos abiertos.</li>
+    <li><b>Evidencia por sector.</b> Para cada sector: la evidencia más fuerte, su tipo y la advertencia principal. Léala de izquierda a derecha y no se quede solo con la cifra: la advertencia dice cuánto pesa.</li>
+    <li><b>Cuatro dominios de impacto.</b> Muestra cómo se corresponden las categorías de tres marcos de medición (ODM, Open Data Barometer y GovLab).</li></ul>`)}
+  ${card("Priorizar, paso a paso", `<p>Esta vista es una herramienta de trabajo: lo que usted califique se guarda en su navegador.</p>
+    <ol>
+    <li><b>Revise los candidatos.</b> La tarjeta «Candidatos: situación y brecha» explica, para cada conjunto, qué se verificó en el portal de Cali y qué problema se quiere resolver.</li>
+    <li><b>Ajuste los pesos (opcional).</b> En «Componentes y pesos», cada componente trae su pregunta guía y un peso en porcentaje. Los pesos deberían sumar 100 %.</li>
+    <li><b>Califique.</b> En «Puntajes por conjunto», elija de 0 a 3 en cada componente (C1 a C7): 0 es nada y 3 es mucho. Pase el mouse sobre C1…C7 en el encabezado para ver la pregunta.</li>
+    <li><b>Marque el riesgo (R).</b> Apto, Apto con resguardos o No apto. Un conjunto «No apto» no se ubica en los cuadrantes.</li>
+    <li><b>Lea el resultado.</b> El puntaje es el promedio ponderado de los componentes ya calificados, y la tabla se reordena sola. Cuando un conjunto tiene los siete componentes y el riesgo, la columna Cuadrante muestra su clase; si falta algo, dice cuántos campos faltan.</li>
+    <li><b>Mire los cuadrantes.</b> El eje horizontal es la facilidad (C5) y el vertical el valor (promedio ponderado de C1, C2, C3, C4, C6 y C7), con umbral en 1,5:
+      <ul><li><b>Victoria temprana:</b> mucho valor y fácil. Abrir primero.</li>
+      <li><b>Largo plazo:</b> mucho valor pero difícil. Preparar las condiciones.</li>
+      <li><b>Medio plazo:</b> fácil pero de menor valor.</li>
+      <li><b>No aporta valor:</b> poco valor y difícil.</li></ul></li>
+    <li><b>Exporte.</b> «Exportar CSV» descarga la tabla con puntajes, riesgo, valor, facilidad, cuadrante y pesos (separada por punto y coma, lista para Excel).</li></ol>
+    <p><b>Otros botones de la tabla:</b> «Orden» alterna de mayor a menor puntaje y al revés; «Añadir conjunto» abre un formulario para un candidato nuevo (nombre, sector, situación y brecha); el lápiz de cada fila lo edita; la papelera lo elimina (pulse dos veces para confirmar); «Restaurar candidatos del informe» devuelve la lista original; «Borrar puntajes» deja todas las calificaciones en blanco.</p>
+    <p>Las tarjetas <b>Tipos de datos mejor valorados</b> (14 tipos, puntaje de 0 a 100) y <b>Ruta de medición</b> complementan el modelo: la primera muestra qué tipos de datos tienen más respaldo; la segunda, cómo medir el resultado de los candidatos más maduros.</p>`)}
+  ${card("Qué guarda su navegador", `<ul>
+    <li>Las calificaciones, los pesos y los candidatos de Priorizar; las tarjetas que plegó; y el tema elegido.</li>
+    <li>Se guardan <b>solo en este navegador y este equipo</b>: nadie más los ve y no se envían a ningún servidor. En otro equipo, en otro navegador o en una ventana privada empezará de cero.</li>
+    <li>Para compartir su priorización, use «Exportar CSV» y envíe el archivo.</li></ul>`)}
+  ${card("Preguntas frecuentes", `<dl class="ay-faq">
+    <dt>¿Por qué una ciudad no aparece en una gráfica?</dt><dd>Porque su dato no se midió con el mismo método o el mismo día. El explorador no mezcla mediciones que no son comparables.</dd>
+    <dt>¿Qué significa «Sin evidencia»?</dt><dd>Que no se encontró información verificable para calificar ese principio. No equivale a una calificación baja.</dd>
+    <dt>No veo la columna Cuadrante en Priorizar.</dt><dd>Aparece cuando el conjunto tiene calificados los siete componentes y el riesgo. Mientras tanto, la columna indica cuántos campos faltan.</dd>
+    <dt>Perdí mis calificaciones.</dt><dd>Probablemente abrió el explorador en otro navegador, en una ventana privada o borró los datos de navegación. Exporte el CSV como respaldo.</dd>
+    <dt>¿De cuándo son los datos?</dt><dd>Cada cifra tiene su fecha de corte, visible al pasar el mouse, en el panel de detalle y en el registro de Fuentes y método.</dd></dl>`)}
+  </div>`;
+}
+
 /* ── Enrutador ── */
-const VISTAS = {inicio: vInicio, comparacion: vComparacion, valor: vValor, priorizar: vPriorizar, indicadores: vIndicadores, fuentes: vFuentes};
+const VISTAS = {inicio: vInicio, comparacion: vComparacion, valor: vValor, priorizar: vPriorizar, indicadores: vIndicadores, fuentes: vFuentes, ayuda: vAyuda};
 function pieDeImpresion(vista) { return vista === "fuentes" ? "" : ""; }
 function cerrarGrupos(excepto) {
   document.querySelectorAll(".g-btn").forEach(b => { if (b === excepto) return; b.setAttribute("aria-expanded", "false"); document.getElementById(b.getAttribute("aria-controls")).hidden = true; });
@@ -1178,7 +1268,7 @@ function ruta() {
   document.querySelectorAll(".nav a, a.marca").forEach(a => { if (a.dataset.v === vista) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
   document.querySelectorAll(".grupo").forEach(g => { g.querySelector(".g-btn").classList.toggle("activo", !!g.querySelector('a[aria-current="page"]')); cerrarGrupos(); });
   const pz = vista === "comparacion" ? (PZ[arg] || D.piezas[0]) : null;
-  document.title = (pz ? pz.titulo + " · " : "") + ({inicio: "Inicio", comparacion: "Comparación", valor: "Valor público", priorizar: "Priorizar", indicadores: "Indicadores", fuentes: "Fuentes y método"}[vista]) + " · Explorador Datos Abiertos Cali";
+  document.title = (pz ? pz.titulo + " · " : "") + ({inicio: "Inicio", comparacion: "Comparación", valor: "Valor público", priorizar: "Priorizar", indicadores: "Indicadores", fuentes: "Fuentes y método", ayuda: "Cómo usar"}[vista]) + " · Explorador Datos Abiertos Cali";
   if (vista === "fuentes") {
     ["q", "fc", "fa"].forEach(i => $("#" + i).addEventListener("input", filtrarRegistro)); filtrarRegistro();
     if (arg && document.getElementById(arg)) document.getElementById(arg).scrollIntoView({block: "center"});
